@@ -8,13 +8,14 @@ var cfg     = require("./config"),
     "configExpress": function (app) {
 
         app.use(function (req, res, next) {
+            var parsed = {};
             ebp(req, {
                 length: req.headers["content-length"],
                 limit: cfg.postLimit,
                 encoding: "utf8"
             }, function (err, string) {
-                if (err) { next(err); }
-                req.body = JSON.parse(string);
+                if (typeof string === "string") { parsed = JSON.parse(string); }
+                req.body = parsed;
                 next();
             });
         });
