@@ -2,9 +2,12 @@
 "use strict";
 
 module.exports = function (app) {
-    app.get("/", function (req, res) {
+
+    app.route("/").get(function (req, res) {
         res.json({"status": "Logger API running!"});
     });
+
+
 
     app.post("/log", function (req, res) {
         app.saveLog("logs", req.body);
