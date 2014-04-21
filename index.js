@@ -20,6 +20,7 @@ app.log = function (log) {
 
 app.saveLog = function (type, data) {
     var db = app.mongo.collection(type);
+    if (data["rdate"] === "undefined") { data["rdate"] = new Date(); }
     db.insert(data, function (err) {
         if (err) { throw err; }
         // ignore for a while!

@@ -27,18 +27,9 @@ module.exports = function (app) {
         });
 
 
-    app.post("/log", function (req, res) {
-        app.saveLog("logs", req.body);
-        res.json({"status": "Ok"});
-    });
-
-    app.post("/error", function (req, res) {
-        app.saveLog("errors", req.body);
-        res.json({"status": "Ok"});
-    });
-
-    app.post("/stat", function (req, res) {
-        app.saveLog("stats", req.body);
+    app.post("/log/:type", function (req, res) {
+        var type = req.params.type || "info";
+        app.saveLog(type, req.body);
         res.json({"status": "Ok"});
     });
 
