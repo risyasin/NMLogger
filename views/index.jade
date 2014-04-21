@@ -5,56 +5,26 @@ block content
         div.col-md-3
             div.panel.panel-default
                 div.panel-heading
-                    h3.panel-title Actions
+                    h3.panel-title Filter stream
                 div.panel-body
-                    //p.title.
-                    //    By H.E. User Id:
-                    //select#usersel.chosenselect
-                    //div(style="height:15px;")
-                    //button#fetch_by_user.btn.btn-sm.btn-success(type="button") Fetch User Ads
-                    //button#fetch_by_user2.btn.btn-sm.btn-success(type="button") Test
-                    //div(style="height:15px;")
-                    //p.title.
-                    //    By realty id or system id
-                    //input(type="text",id="fetch_id",value="")
-                    //div(style="height:15px;")
-                    //button#fetch_by_id.btn.btn-sm.btn-success(type="button") Fetch Single
-                    //div(style="height:15px;")
-                    // button.cmd-button.btn.btn-sm.btn-success(type="button",data-epu="/mapper/companies") Match Companies
-                    //div(style="height:15px;")
                     p.title.
-                       Synchronization
-                    select#categorysel.chosenselect
-                        option(value="-",selected="selected") Choose type
+                    select#fType.chosenselect
+                        option(value="any",selected="selected") Any data received
+                        option(value="logs") Only logs
+                        option(value="errors") Only errors
                     div(style="height:15px;")
-                    select#citysel.chosenselect
-                        option(value="-",selected="selected") Choose city
-                    div(style="height:15px;")
-                    select#countysel.chosenselect
-                        option(value="-",selected="selected") Choose county
-                    div(style="height:15px;")
-                    //input#check_img(type="checkbox",checked="checked",name="check_img",value="1")
-                    //label(for="check_img").
-                    //    &nbsp; Sync realty images
-                    //div(style="height:15px;")
-                    button#fetch_realty_list.btn.btn-sm.btn-success(type="button") Fetch Data
-                    &nbsp;
-                    button#stop_fetchers.btn.btn-sm.btn-default(type="button",disabled="disabled") Stop
-                    &nbsp;
-                    button#testcall.btn.btn-sm.btn-default(type="button") Clear
-                    div(style="height:15px;")
-                    button#start_sync.btn.btn-sm.btn-primary(type="button") Start Auto Sync [Bot]
-                    div(style="height:15px;")
-                    div#fetcher_status_dsp(style="overflow:hidden")
-
+                    select#dLimit.chosenselect
+                        option(value="10",selected="selected") Last 10
+                        option(value="100") Last 100
+                        option(value="200") Last 200
+                        option(value="500") Last 500
+                        option(value="1000") Last 1000 (Dom?)
 
         div.col-md-9
-            div#display.well= rep
-
+            div#display= rep
 
 block bodyEnd
     script(type='text/javascript').
         var config = !{JSON.stringify(config)};
 
-    script(src='/js/cli_app.js')
-
+    script(src='/js/app.js')

@@ -11,6 +11,8 @@ var cfg     = require("./config"),
     mc      = require("mongodb").MongoClient,
     app = express();
 
+app.socket = null;
+app.mongo = null;
 
 app.log = function (log) {
     console.log(log);
@@ -22,7 +24,12 @@ app.saveLog = function (type, data) {
         if (err) { throw err; }
         // ignore for a while!
     });
+    app.slog(data, type);
 };
+
+// server.listen(cfg.port);
+
+
 
 app.start = function (cb) {
     var ready = {};
@@ -42,10 +49,21 @@ app.start = function (cb) {
     };
 
     ready["run"] = function (tcb) {
+
         var server = app.listen(cfg.port, function () {
             app.log("Logger API started on port " + server.address().port);
             tcb(null, true);
-        });
+        }),
+        io = require("socket.io").listen(server).set("log level", 1);
+
+        io.sockets.on("connection", function (socket) { app.socket = socket; });
+
+        app.slog = function (data, ft) {
+            if (ft === null) { ft = "display"; }
+            if (app.socket !== null) {
+                app.socket.emit(ft, JSON.stringify(data));
+            }
+        };
     };
 
     async.series(ready, function (err, res) {
