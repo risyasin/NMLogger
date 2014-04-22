@@ -11,3 +11,9 @@ Sample usage:
 	$logger = new Logger();
 	$logger->error(array('err_no' => 404, 'errmsg' => 'Not Found', 'state' => $_SERVER));
 
+
+Custom Logger jQuery
+
+    $(".my_button").click(function () {
+        $.Logger({ my_action_to_log: 'whatever' });
+    });
