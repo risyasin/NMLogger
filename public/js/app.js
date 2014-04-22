@@ -50,7 +50,7 @@ app.socket.on("log", function (data) {
 });
 
 $("document").ready(function () {
-    $("select.chosenselect").chosen({"width": "220px"}).on("change", function () {
+    $("select.chosenselect").chosen().on("change", function () {
         app[$(this).attr("id")] = $(this).val();
         app.updateUi();
     });

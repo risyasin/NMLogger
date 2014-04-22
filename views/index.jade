@@ -1,27 +1,7 @@
 extends defaults
 
 block content
-    div#bodym.row
-        div.col-md-3
-            div.panel.panel-default
-                div.panel-heading
-                    h3.panel-title Filter stream
-                div.panel-body
-                    p.title.
-                    select#fType.chosenselect
-                        option(value="*",selected="selected") Any data received
-                        option(value="logs") Only logs
-                        option(value="errors") Only errors
-                    div(style="height:15px;")
-                    select#dLimit.chosenselect
-                        option(value="10",selected="selected") Last 10
-                        option(value="100") Last 100
-                        option(value="200") Last 200
-                        option(value="500") Last 500
-                        option(value="1000") Last 1000 (Dom?)
-
-        div.col-md-9
-            div#display= rep
+    div#display= rep
 
 block bodyEnd
     script(type='text/javascript').
