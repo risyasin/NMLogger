@@ -45,7 +45,7 @@ app.socket.on("log", function (data) {
     console.log(["data:", data]);
     var sd = JSON.parse(data),
         ts = "<span class='tsd'>" + sd.time + "</span>";
-    app.dsp.prepend("<pre class='logs " + sd.type + "'>" + app.syntaxHl(sd.data) + ts + "</pre>");
+    app.dsp.prepend("<pre class='logs " + sd.type + "'>" + ts +  app.syntaxHl(sd.data) + "</pre>");
     app.updateUi();
 });
 
