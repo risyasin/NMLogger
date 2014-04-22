@@ -13,6 +13,8 @@ var cfg     = require("./config"),
 
 app.socket = null;
 app.mongo = null;
+app.sio = null;
+app.clientsNum = 0;
 
 app.log = function (log) {
     console.log(log);
@@ -33,7 +35,8 @@ app.slog = function (data) {
 app.sendLog = function (data, type) {
     if (app.socket !== null) {
         var sData = { "time": new Date(), "type": type, "data": data };
-        app.socket.sockets.emit("log", JSON.stringify(sData));
+        console.log(["app.sio", app.sio]);
+        app.sio.sockets.emit("log", JSON.stringify(sData));
     }
 };
 
@@ -59,11 +62,14 @@ app.start = function (cb) {
         var server = app.listen(cfg.port, function () {
             app.log("Logger API started on port " + server.address().port);
             tcb(null, true);
-        }),
+        });
 
-        io = require("socket.io").listen(server).set("log level", 1);
+        app.sio = require("socket.io").listen(server).set("log level", 1);
 
-        io.sockets.on("connection", function (socket) { app.socket = socket; });
+        app.sio.sockets.on("connection", function (socket) {
+            app.socket = socket;
+            app.clientsNum = app.sio.sockets.clients().length;
+        });
 
     };
 

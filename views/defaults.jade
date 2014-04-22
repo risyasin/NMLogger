@@ -25,6 +25,9 @@ body
                         a(href="/errors") Errors
                 ul.nav.navbar-nav.pull-right.urnav
                     li
+                        span.label.label-warning=data.clientsNum
+                    li --
+                    li
                         select#fType.chosenselect
                             option(value="*",selected="selected") Any data received
                             option(value="logs") Only logs
