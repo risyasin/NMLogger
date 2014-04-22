@@ -27,9 +27,17 @@ var cfg         = require("./config"),
                     });
             }, null);
 
-            // Allow CORS 
+            // Allow CORS
+            /** CHROME says:
+             * XMLHttpRequest cannot load http://fms.secretcv.com:8081/logs/info.
+             * The 'Access-Control-Allow-Origin' header contains multiple values
+             * 'secretcv.com www.secretcv.com scv.dev', but only one is allowed.
+             * Origin 'http://scv.dev' is therefore not allowed access.
+             */
+
             app.use(function (req, res, next) {
-                res.header("Access-Control-Allow-Origin", "secretcv.com www.secretcv.com scv.dev");
+                // res.header("Access-Control-Allow-Origin", "http://secretcv.com http://www.secretcv.com http://scv.dev");
+                res.header("Access-Control-Allow-Origin", "*");
                 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                 next();
             });
