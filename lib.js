@@ -26,6 +26,13 @@ var cfg         = require("./config"),
                         }
                     });
             }, null);
+
+            // Allow CORS 
+            app.use(function (req, res, next) {
+                res.header("Access-Control-Allow-Origin", "secretcv.com www.secretcv.com scv.dev");
+                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                next();
+            });
             // static files
             app.use(express.static(__dirname + "/public"), null);
 
