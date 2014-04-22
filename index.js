@@ -33,7 +33,7 @@ app.slog = function (data) {
 app.sendLog = function (data, type) {
     if (app.socket !== null) {
         var sData = { "time": new Date(), "type": type, "data": data };
-        app.socket.emit("log", JSON.stringify(sData));
+        app.socket.sockets.emit("log", JSON.stringify(sData));
     }
 };
 
