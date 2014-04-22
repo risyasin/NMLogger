@@ -1,7 +1,8 @@
 
 "use strict";
 
-var cfg         = require("./config");
+var cfg         = require("./config"),
+    _           = require("underscore");
 
 var pageTemplate = function (req, res, app, ptype) {
     res.render(ptype, {
@@ -20,7 +21,6 @@ module.exports = function (app) {
     app.route("/logs") //
         .get(function (req, res) {
             pageTemplate(req, res, app, "index.jade");
-            app.slog({"message": "welcome!"});
         })
         .post(function (req, res) {
             pageTemplate(req, res, app, "index.jade");
@@ -28,9 +28,13 @@ module.exports = function (app) {
 
 
     app.post("/log/:type", function (req, res) {
-        var type = req.params.type || "info";
-        app.saveLog(type, req.body);
-        res.json({"status": "Ok"});
+        var type = req.params.type || "info", status = "Ok";
+        if (_.keys(req.body).length > 0) {
+            app.saveLog(type, req.body);
+        } else {
+            status = "Not saved!";
+        }
+        res.json({"status": status});
     });
 
     app.post("/test", function (req, res) {

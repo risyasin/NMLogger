@@ -6,7 +6,7 @@
     overflow: scroll;
 }
 
-pre {  }
+pre { border-color: #fffce1; }
 span.string { color: green; }
 span.number { color: darkorange; }
 span.boolean { color: blue; }
@@ -14,10 +14,13 @@ span.null { color: magenta; }
 span.key { color: red; }
 
 
-pre.logs {
-    background-color: #b9ffcb;
-}
+pre.info { border-color: #3734ff; }
 
-pre.errors {
-    background-color: #ffb5bd;
+pre.logs { border-color: #b750ff; }
+
+pre.errors { border-color: #ff0504; }
+
+span.tsd {
+    float:right;
+    background-color: #3a87ad; color: #ffffff;
 }

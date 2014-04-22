@@ -3,7 +3,7 @@
 /*jshint jquery:true */
 
 var app = {};
-app.fType = "any";
+app.fType = "*";
 app.dLimit = 10;
 app.dsp = $("#display");
 app.socket = io.connect();
@@ -41,20 +41,12 @@ app.socket.on("display", function (data) {
     app.updateUi();
 });
 
-app.socket.on("logs", function (data) {
-    if (app.fType === "any" || app.fType === "logs") {
-        data = JSON.parse(data);
-        app.dsp.prepend("<pre class='logs'>" + app.syntaxHl(data) + "</pre>");
-        app.updateUi();
-    }
-});
-
-app.socket.on("errors", function (data) {
-    if (app.fType === "any" || app.fType === "errors") {
-        data = JSON.parse(data);
-        app.dsp.prepend("<pre class='errors'>" + app.syntaxHl(data) + "</pre>");
-        app.updateUi();
-    }
+app.socket.on("log", function (data) {
+    console.log(["data:", data]);
+    var sd = JSON.parse(data),
+        ts = "<span class='tsd'>" + sd.time + "</span>";
+    app.dsp.prepend("<pre class='logs " + sd.type + "'>" + app.syntaxHl(sd.data) + ts + "</pre>");
+    app.updateUi();
 });
 
 $("document").ready(function () {

@@ -20,17 +20,22 @@ app.log = function (log) {
 
 app.saveLog = function (type, data) {
     var db = app.mongo.collection(type);
-    if (data["rdate"] === "undefined") { data["rdate"] = new Date(); }
-    db.insert(data, function (err) {
-        if (err) { throw err; }
-        // ignore for a while!
-    });
-    app.slog(data, type);
+    db.insert(data, function (err) { if (err) { throw err; } });
+    app.sendLog(data, type);
 };
 
-// server.listen(cfg.port);
+app.slog = function (data) {
+    if (app.socket !== null) {
+        app.socket.emit("display", JSON.stringify(data));
+    }
+};
 
-
+app.sendLog = function (data, type) {
+    if (app.socket !== null) {
+        var sData = { "time": new Date(), "type": type, "data": data };
+        app.socket.emit("log", JSON.stringify(sData));
+    }
+};
 
 app.start = function (cb) {
     var ready = {};
@@ -55,16 +60,11 @@ app.start = function (cb) {
             app.log("Logger API started on port " + server.address().port);
             tcb(null, true);
         }),
+
         io = require("socket.io").listen(server).set("log level", 1);
 
         io.sockets.on("connection", function (socket) { app.socket = socket; });
 
-        app.slog = function (data, ft) {
-            if (ft === null) { ft = "display"; }
-            if (app.socket !== null) {
-                app.socket.emit(ft, JSON.stringify(data));
-            }
-        };
     };
 
     async.series(ready, function (err, res) {
