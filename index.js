@@ -35,7 +35,6 @@ app.slog = function (data) {
 app.sendLog = function (data, type) {
     if (app.socket !== null) {
         var sData = { "time": new Date(), "type": type, "data": data };
-        console.log(["app.sio", app.sio]);
         app.sio.sockets.emit("log", JSON.stringify(sData));
     }
 };
