@@ -1,10 +1,10 @@
-##### SCVlogger
-A Basic Log facility uses NodeJS & MongoDB
+### NMLogger
+A generic log facility that uses NodeJS & MongoDB
 
 
-Samples/Logger.php
+##### Samples
 
-Custom Logger for PHP
+- Custom Logger for PHP
 Sends all required to sample logger as in Non-blocking way.
 Sample usage:
 
@@ -12,7 +12,8 @@ Sample usage:
 	$logger->error(array('err_no' => 404, 'errmsg' => 'Not Found', 'state' => $_SERVER));
 
 
-Custom Logger jQuery
+- Custom Logger jQuery
+Sends all data in parameter, additionally adds location.href & browser info via $.browser obj of jQuery
 
     $(".my_button").click(function () {
         $.Logger({ my_action_to_log: 'whatever' });
